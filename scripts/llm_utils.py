@@ -7,8 +7,8 @@ import os
 import requests
 import minsearch
 
-# os.environ["YDC_API_KEY"] = ""
-# os.environ["OPENAI_API_KEY"] = ""
+os.environ["YDC_API_KEY"] = "bf95c2d7-2c5e-436e-a1dc-c6e731ffc363<__>1PZRhQETU8N2v5f4LMRv2Gvo"
+os.environ["OPENAI_API_KEY"] = "sk-proj-0qParHYB2buSyritB1FhT3BlbkFJU41qM0Eo5lFFpQbbhHZo"
 
 
 def get_ai_snippets_for_query(query):
@@ -119,22 +119,74 @@ def get_crypto_recommendations(age, risk_appetite, knowledge_level, emergency_fu
     
     return json.loads(response.choices[0].message.content)
 
-# Load documents
-with open('document.json', 'rt') as f_in:
-    docs_raw = json.load(f_in)
+# # Load documents
+# with open('document.json', 'rt') as f_in:
+#     docs_raw = json.load(f_in)
 
-documents = []
-for course_dict in docs_raw:
-    for doc in course_dict['documents']:
-        doc['course'] = course_dict['course']
-        documents.append(doc)
+# documents = []
+# for course_dict in docs_raw:
+#     for doc in course_dict['documents']:
+#         doc['course'] = course_dict['course']
+#         documents.append(doc)
 
-# Create and fit the index
-index = minsearch.Index(
-    text_fields=["question", "text", "section"],
-    keyword_fields=["course"]
-)
-index.fit(documents)
+# # Create and fit the index
+# index = minsearch.Index(
+#     text_fields=["question", "text", "section"],
+#     keyword_fields=["course"]
+# )
+# index.fit(documents)
+
+def load_json_path(json_file):
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    json_path = os.path.join(script_dir, json_file)
+    return json_path
+
+
+def load_learning_paths():
+    json_path = load_json_path('document.json')
+    with open(json_path, 'r') as f:
+        data = json.load(f)
+    
+    learning_paths = {}
+    for course in data:
+        course_level = course['course']
+        learning_paths[course_level] = [
+            {
+                'topic': doc['section'],
+                'question': doc['question'],
+                'text': doc['text']
+            }
+            for doc in course['documents']
+        ]
+    
+    return learning_paths
+
+def load_documents():
+    json_path = load_json_path('document.json')
+    with open(json_path, 'rt') as f_in:
+        docs_raw = json.load(f_in)
+
+    documents = []
+    for course_dict in docs_raw:
+        for doc in course_dict['documents']:
+            doc['course'] = course_dict['course']
+            documents.append(doc)
+
+    return documents
+
+def create_index(documents):
+    index = minsearch.Index(
+        text_fields=["question", "text", "section"],
+        keyword_fields=["course"]
+    )
+    index.fit(documents)
+    return index
+
+# Load documents and create index
+documents = load_documents()
+index = create_index(documents)
+
+
 
 def search(query, course_level):
     boost = {'question': 3.0, 'section': 0.5}
@@ -232,14 +284,3 @@ def rag(query, course_level):
 
     answer = llm(prompt, course_level)
     return answer
-
-    
-def get_ai_snippets_for_query(query):
-    headers = {"X-API-Key": os.getenv("YDC_API_KEY")}
-    params = {"query": query}
-    return requests.get(
-        f"https://api.ydc-index.io/search?query={query}",
-        params=params,
-        headers=headers,
-    ).json()
-

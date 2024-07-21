@@ -1,13 +1,67 @@
 import streamlit as st
-from scripts.fetch_coin_api import get_historical_prices, get_benchmark_data
-from scripts.detect_anomalies import detect_anomalies
-from scripts.detect_volatilities import calculate_historical_volatility, detect_volatility_spikes
-from scripts.visualisation import *
-from scripts.onchain_analysis import *
-from scripts.scam_content import *
-from scripts.how_to_use_content import *
-from scripts.llm_utils import *
+from fetch_coin_api import get_historical_prices, get_benchmark_data
+from detect_anomalies import detect_anomalies
+from detect_volatilities import calculate_historical_volatility, detect_volatility_spikes
+from visualisation import *
+from onchain_analysis import *
+from scam_content import *
+from how_to_use_content import *
+from llm_utils import *
 
+def learning_path_page():
+    st.title("Cryptocurrency Learning Assistant")
+    
+    # Load learning paths from document.json
+    learning_paths = load_learning_paths()
+    
+    # Course level selection
+    course_level = st.selectbox("Select your course level:", list(learning_paths.keys()))
+    
+    # Reset progress when changing course level
+    if 'current_course' not in st.session_state or st.session_state.current_course != course_level:
+        st.session_state.progress = 0
+        st.session_state.current_course = course_level
+    
+    # Get user's progress
+    progress = st.session_state.get('progress', 0)
+    
+    # Display current topic
+    current_topic = learning_paths[course_level][progress]['topic']
+    current_question = learning_paths[course_level][progress]['question']
+    current_text = learning_paths[course_level][progress]['text']
+    
+    st.subheader(f"Current Topic: {current_topic}")
+    st.write(f"Question: {current_question}")
+    
+    # Display the answer
+    st.write("Answer:")
+    st.write(current_text)
+    
+    # User input for follow-up questions
+    user_question = st.text_input("Ask a follow-up question about this topic:", value=current_question)
+    
+    if st.button("Answer"):
+        if user_question:
+            response = rag(user_question, course_level)
+            st.write("Follow-up Answer:")
+            st.write(response)
+    
+    # Next topic button
+    st.subheader("What's Next?")
+    if progress < len(learning_paths[course_level]) - 1:
+        next_topic = learning_paths[course_level][progress + 1]['topic']
+        if st.button(f"Move to next topic: {next_topic}"):
+            st.session_state.progress = progress + 1
+            st.experimental_rerun()
+    else:
+        st.write("Congratulations! You've completed this course level.")
+        if st.button("Restart the course"):
+            st.session_state.progress = 0
+            st.experimental_rerun()
+    
+    # Display progress
+    st.progress((progress + 1) / len(learning_paths[course_level]))
+    st.write(f"Progress: {progress + 1}/{len(learning_paths[course_level])} topics completed")
 
 def anomaly_detection_page():
     st.title("Cryptocurrency Anomaly and Volatility Analysis 📈💰📊")
@@ -176,7 +230,7 @@ def crypto_recommendations_page():
 def main():
     st.logo("images/logo.png")
     st.sidebar.title("CryptoGuard")
-    page = st.sidebar.radio("Go to", ["0.How to Use", "1.Anomaly Detection", "2.On-Chain Analysis", "3.Common Scams", "4.Hype and Sentiment", "5.Crypto Recommendations"])
+    page = st.sidebar.radio("Go to", ["0.How to Use", "1.Anomaly Detection", "2.On-Chain Analysis", "3.Common Scams", "4.Hype and Sentiment", "5.Crypto Recommendations", "6.Learning Path"])
 
     if page == "0.How to Use":
         how_to_use_page()
@@ -190,6 +244,8 @@ def main():
         sentiments_and_hype_page()
     elif page == "5.Crypto Recommendations":
         crypto_recommendations_page()
+    elif page == "6.Learning Path":
+        learning_path_page()
 
 if __name__ == "__main__":
     main()
