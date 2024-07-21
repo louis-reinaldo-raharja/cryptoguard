@@ -7,8 +7,8 @@ import os
 import requests
 import minsearch
 
-os.environ["YDC_API_KEY"] = ""
-os.environ["OPENAI_API_KEY"] = ""
+# os.environ["YDC_API_KEY"] = ""
+# os.environ["OPENAI_API_KEY"] = ""
 
 
 def get_ai_snippets_for_query(query):
