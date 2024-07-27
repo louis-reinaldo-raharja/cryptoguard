@@ -8,7 +8,7 @@ import requests
 import minsearch
 
 os.environ["YDC_API_KEY"] = "bf95c2d7-2c5e-436e-a1dc-c6e731ffc363<__>1PZRhQETU8N2v5f4LMRv2Gvo"
-os.environ["OPENAI_API_KEY"] = "sk-proj-0qParHYB2buSyritB1FhT3BlbkFJU41qM0Eo5lFFpQbbhHZo"
+os.environ["OPENAI_API_KEY"] = "sk-proj-JJwngSwbYU4H10J22mlhT3BlbkFJ06NRpORpOEHdIy1UD92L"
 
 
 def get_ai_snippets_for_query(query):
