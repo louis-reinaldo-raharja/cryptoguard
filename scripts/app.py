@@ -230,7 +230,7 @@ def crypto_recommendations_page():
 def main():
     st.logo("images/logo.png")
     st.sidebar.title("CryptoGuard")
-    page = st.sidebar.radio("Go to", ["0.How to Use", "1.Anomaly Detection", "2.On-Chain Analysis", "3.Common Scams", "4.Hype and Sentiment", "5.Crypto Recommendations"])
+    page = st.sidebar.radio("Go to", ["0.How to Use", "1.Anomaly Detection", "2.On-Chain Analysis", "3.Common Scams", "4.Hype and Sentiment", "5.Crypto Recommendations", "6.Learing Path"])
 
     if page == "0.How to Use":
         how_to_use_page()
@@ -244,8 +244,8 @@ def main():
         sentiments_and_hype_page()
     elif page == "5.Crypto Recommendations":
         crypto_recommendations_page()
-    # elif page == "6.Learning Path":
-    #     learning_path_page()
+    elif page == "6.Learning Path":
+        learning_path_page()
 
 if __name__ == "__main__":
     main()
