@@ -30,10 +30,8 @@ RUN poetry install --no-dev
 COPY scripts/ scripts/
 COPY images/ images/
 
-
-
-# Expose the port that Streamlit will run on
-EXPOSE 8505
+# Expose the standard HTTP port
+EXPOSE 80
 
 # Set the command to run the Streamlit app
-CMD ["poetry", "run", "streamlit", "run", "scripts/app.py", "--server.port=8505", "--server.address=0.0.0.0"]
+CMD ["poetry", "run", "streamlit", "run", "scripts/app.py", "--server.port=80", "--server.address=0.0.0.0"]

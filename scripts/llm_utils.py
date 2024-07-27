@@ -161,68 +161,6 @@ def load_learning_paths():
     
     return learning_paths
 
-def load_documents():
-    json_path = load_json_path('document.json')
-    with open(json_path, 'rt') as f_in:
-        docs_raw = json.load(f_in)
-
-    documents = []
-    for course_dict in docs_raw:
-        for doc in course_dict['documents']:
-            doc['course'] = course_dict['course']
-            documents.append(doc)
-
-    return documents
-
-def create_index(documents):
-    index = minsearch.Index(
-        text_fields=["question", "text", "section"],
-        keyword_fields=["course"]
-    )
-    index.fit(documents)
-    return index
-
-# Load documents and create index
-documents = load_documents()
-index = create_index(documents)
-
-
-
-def search(query, course_level):
-    boost = {'question': 3.0, 'section': 0.5}
-
-    results = index.search(
-        query=query,
-        filter_dict={'course': course_level},
-        boost_dict=boost,
-        num_results=5
-    )
-
-    # Calculate a simple confidence score based on the relevance of the top result
-    confidence = results[0]['_score'] if results else 0
-
-    return results, confidence
-
-
-def build_prompt(query, search_results):
-    prompt_template = """
-You are a course instructor for Crytocurrencies. Answer the QUESTION based on the CONTEXT from the document database to a 5 year old.
-Use only the facts from the CONTEXT when answering the QUESTION. 
-
-QUESTION: {question}
-
-CONTEXT: 
-{context}
-""".strip()
-
-    context = ""
-    
-    for doc in search_results:
-        context = context + f"section: {doc['section']}\nquestion: {doc['question']}\nanswer: {doc['text']}\n\n"
-    
-    prompt = prompt_template.format(question=query, context=context).strip()
-    return prompt
-
 def build_web_prompt(query, web_results):
     prompt_template = """
 You are a course instructor for Cryptocurrencies. Answer the QUESTION based on the CONTEXT from web search results. Use only the facts from the CONTEXT when answering the QUESTION. If the information is not directly related to cryptocurrencies, adapt it to the context of cryptocurrencies.
@@ -248,39 +186,24 @@ CONTEXT:
     return prompt
 
 
-
-def llm(prompt, course_level):
+def rag(query, course_level):
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    
+    prompt = f"""
+    You are a course instructor for Cryptocurrencies teaching a {course_level} level course. 
+    Answer the following question based on your knowledge of cryptocurrencies:
 
-    content = "You are a cryptocurrency course instructor."
+    QUESTION: {query}
 
-    if course_level == 'beginner':
-        content = content + " Explain the concepts to a 5 year old."
+    Provide a comprehensive answer suitable for a {course_level} level student.
+    """
 
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a cryptocurrency analyst." + content},
+            {"role": "system", "content": "You are a cryptocurrency analyst and course instructor."},
             {"role": "user", "content": prompt}
         ]
     )
     
     return response.choices[0].message.content
-
-def rag(query, course_level):
-    search_results, confidence = search(query, course_level)
-    
-    # Set a threshold for when to use web search (adjust as needed)
-    confidence_threshold = 1.5
-
-    if confidence < confidence_threshold:
-        # Use web search
-        print('Getting results from the web')
-        web_results = get_ai_snippets_for_query(query)
-        prompt = build_web_prompt(query, web_results)
-    else:
-        # Use local search results
-        prompt = build_prompt(query, search_results)
-
-    answer = llm(prompt, course_level)
-    return answer
