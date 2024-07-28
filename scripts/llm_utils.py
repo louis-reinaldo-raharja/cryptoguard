@@ -2,13 +2,12 @@ from langchain.retrievers.you import YouRetriever
 from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
 from openai import OpenAI
+from dotenv import load_dotenv
 import json
 import os
 import requests
-import minsearch
 
-os.environ["YDC_API_KEY"] = "bf95c2d7-2c5e-436e-a1dc-c6e731ffc363<__>1PZRhQETU8N2v5f4LMRv2Gvo"
-os.environ["OPENAI_API_KEY"] = "sk-proj-JJwngSwbYU4H10J22mlhT3BlbkFJ06NRpORpOEHdIy1UD92L"
+load_dotenv()
 
 
 def get_ai_snippets_for_query(query):
@@ -118,23 +117,6 @@ def get_crypto_recommendations(age, risk_appetite, knowledge_level, emergency_fu
     )
     
     return json.loads(response.choices[0].message.content)
-
-# # Load documents
-# with open('document.json', 'rt') as f_in:
-#     docs_raw = json.load(f_in)
-
-# documents = []
-# for course_dict in docs_raw:
-#     for doc in course_dict['documents']:
-#         doc['course'] = course_dict['course']
-#         documents.append(doc)
-
-# # Create and fit the index
-# index = minsearch.Index(
-#     text_fields=["question", "text", "section"],
-#     keyword_fields=["course"]
-# )
-# index.fit(documents)
 
 def load_json_path(json_file):
     script_dir = os.path.dirname(os.path.abspath(__file__))

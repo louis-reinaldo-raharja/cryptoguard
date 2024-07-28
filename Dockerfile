@@ -21,7 +21,7 @@ RUN pip install poetry
 RUN poetry init --no-interaction --name=cryptoguard --author="louis reinaldo <louisreinaldo@gmail.com>"
 
 # Add dependencies
-RUN poetry add streamlit plotly web3 requests openai langchain langchain-community elasticsearch "numpy<2.0.0" pandas scikit-learn
+RUN poetry add streamlit plotly web3 requests openai langchain langchain-community elasticsearch "numpy<2.0.0" pandas scikit-learn python-dotenv
 
 # Install project dependencies
 RUN poetry install --no-dev
@@ -29,7 +29,8 @@ RUN poetry install --no-dev
 # Copy the Streamlit app and specific scripts
 COPY scripts/ scripts/
 COPY images/ images/
-
+COPY .gitignore .
+COPY .env .
 # Expose the standard HTTP port
 EXPOSE 80
 
