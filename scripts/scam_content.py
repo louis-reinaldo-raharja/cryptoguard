@@ -7,7 +7,14 @@ def scam_types_page():
         ("Ponzi Schemes", "🔄"),
         ("Pump and Dump", "📈"),
         ("Pig Butchering Scams", "🐷"),
-        ("FTX Scandal", "💥")
+        ("FTX Scandal", "💥"),
+        ("Fake ICOs", "🎭"),
+        ("Phishing Attacks", "🎣"),
+        ("Rug Pulls", "🏃‍♂️"),
+        ("Fake Exchanges", "🏦"),
+        ("Social Media Impersonation", "👥"),
+        ("Malware Wallets", "🦠"),
+        ("Sandwich Attack", "🥪")
     ]
 
     col1, col2 = st.columns(2)
@@ -127,6 +134,152 @@ def display_scam_details(scam):
         st.markdown("- [YouTube: The Rise and Fall of FTX Explained](https://www.youtube.com/watch?v=Abd8L_Conow)")
         st.markdown("- [Reddit: FTX Collapse Discussion](https://www.reddit.com/r/CryptoCurrency/comments/yrs380/ftx_collapse_megathread/)")
         st.markdown("- [Twitter: Crypto Journalist's Thread on FTX Scandal](https://twitter.com/laurashin/status/1590696594643554304)")
+    
+    elif scam == "Fake ICOs":
+        st.header("How it works")
+        st.write("Fraudsters create fake Initial Coin Offerings (ICOs) for non-existent cryptocurrency projects, promising high returns to lure investors.")
+        
+        st.header("Example")
+        st.write("The 'PlexCoin' ICO raised \$15 million before being shut down by the SEC.")
+        
+        st.header("Estimated Losses")
+        st.write("Fake ICOs have cost investors billions of dollars globally.")
+        
+        st.header("Red Flags")
+        st.write("1. Unrealistic promises of high returns")
+        st.write("2. Lack of a clear, viable business plan")
+        st.write("3. Anonymous or unverifiable team members")
+        st.write("4. Absence of a working prototype or product")
+        
+        st.header("Learn More")
+        st.markdown("- [SEC Investor Alert on ICOs](https://www.sec.gov/oiea/investor-alerts-and-bulletins/ib_coinofferings)")
+        st.markdown("- [CoinDesk: The Rise and Fall of PlexCoin](https://www.coindesk.com/markets/2017/12/04/sec-files-fraud-charges-against-plexcoin-ico-organizer/)")
+
+    elif scam == "Phishing Attacks":
+        st.header("How it works")
+        st.write("Scammers create fake websites or send emails mimicking legitimate cryptocurrency services to steal users' login credentials and private keys.")
+        
+        st.header("Example")
+        st.write("In 2018, hackers stole \$50 million worth of Ethereum using a phishing attack on the Bee Token ICO.")
+        
+        st.header("Estimated Losses")
+        st.write("Phishing attacks in the crypto space have resulted in hundreds of millions of dollars in losses.")
+        
+        st.header("Red Flags")
+        st.write("1. Unsolicited emails or messages asking for private keys or login information")
+        st.write("2. URLs that are slightly different from legitimate websites")
+        st.write("3. Pressure to act quickly or provide sensitive information")
+        
+        st.header("Learn More")
+        st.markdown("- [Binance Academy: Crypto Phishing](https://academy.binance.com/en/articles/what-is-phishing)")
+        st.markdown("- [CoinDesk: Bee Token ICO Phishing Scam](https://www.coindesk.com/markets/2018/02/01/bee-token-ico-stung-by-phishing-scam/)")
+
+    elif scam == "Rug Pulls":
+        st.header("How it works")
+        st.write("Developers create a new cryptocurrency token, artificially inflate its value, then suddenly sell off their holdings, causing the price to crash.")
+        
+        st.header("Example")
+        st.write("The AnubisDAO rug pull in 2021 resulted in \$60 million worth of investor funds being stolen.")
+        
+        st.header("Estimated Losses")
+        st.write("Rug pulls accounted for 37% of all cryptocurrency scam revenue in 2021, totaling about \$2.8 billion.")
+        
+        st.header("Red Flags")
+        st.write("1. Anonymous development team")
+        st.write("2. Locked liquidity for a short period")
+        st.write("3. Excessive hype and promises of unrealistic returns")
+        st.write("4. Large portion of tokens held by a small number of wallets")
+        
+        st.header("Learn More")
+        st.markdown("- [Chainalysis: The Biggest Threat to Trust in Cryptocurrency: Rug Pulls Put 2021 Cryptocurrency Scam Revenue Close to All-time Highs](https://blog.chainalysis.com/reports/2021-crypto-scam-revenues/)")
+        st.markdown("- [CoinDesk: AnubisDAO Investors Lose \$60M in Apparent Rug Pull](https://www.coindesk.com/markets/2021/10/29/anubisdao-investors-lose-60m-in-apparent-rug-pull/)")
+
+    elif scam == "Fake Exchanges":
+        st.header("How it works")
+        st.write("Scammers create fake cryptocurrency exchanges that appear legitimate but are designed to steal users' funds or personal information.")
+        
+        st.header("Example")
+        st.write("In 2019, the IDAX exchange suddenly shut down, with the CEO reportedly going missing along with the private keys to user funds.")
+        
+        st.header("Estimated Losses")
+        st.write("Losses from fake exchanges can range from thousands to millions of dollars per incident.")
+        
+        st.header("Red Flags")
+        st.write("1. Unusually high trading volumes for a new or unknown exchange")
+        st.write("2. Lack of regulatory compliance or licensing information")
+        st.write("3. Poor website security (e.g., no HTTPS)")
+        st.write("4. Limited or non-existent customer support")
+        
+        st.header("Learn More")
+        st.markdown("- [CoinDesk: IDAX Exchange Says CEO Has Gone Missing With Cold Wallet Keys](https://www.coindesk.com/markets/2019/11/29/idax-exchange-says-ceo-has-gone-missing-with-cold-wallet-keys/)")
+        st.markdown("- [Crypto.com: How to Spot a Fake Crypto Exchange](https://crypto.com/university/how-to-spot-fake-crypto-exchanges)")
+
+    elif scam == "Social Media Impersonation":
+        st.header("How it works")
+        st.write("Scammers create fake social media accounts impersonating well-known figures in the crypto space or legitimate projects to trick users into sending cryptocurrency.")
+        
+        st.header("Example")
+        st.write("In 2020, a Twitter hack compromised high-profile accounts like Elon Musk and Barack Obama to promote a Bitcoin scam.")
+        
+        st.header("Estimated Losses")
+        st.write("The 2020 Twitter hack alone resulted in over \$100,000 worth of Bitcoin being stolen.")
+        
+        st.header("Red Flags")
+        st.write("1. Requests to send cryptocurrency for a promised return")
+        st.write("2. Urgency or time-limited offers")
+        st.write("3. Slight variations in usernames or handles from official accounts")
+        st.write("4. Poor grammar or spelling in posts")
+        
+        st.header("Learn More")
+        st.markdown("- [The Verge: Twitter hack recap](https://www.theverge.com/2020/7/15/21326200/elon-musk-bill-gates-twitter-hack-bitcoin-scam-compromised)")
+        st.markdown("- [FTC: How to Spot, Avoid and Report Crypto Scams](https://consumer.ftc.gov/articles/how-spot-avoid-and-report-crypto-scams)")
+
+    elif scam == "Malware Wallets":
+        st.header("How it works")
+        st.write("Hackers create fake cryptocurrency wallet apps that, when installed, steal users' private keys or redirect transactions to the scammer's wallet.")
+        
+        st.header("Example")
+        st.write("In 2021, a fake Trezor app on the Apple App Store stole \$600,000 in Bitcoin from one user.")
+        
+        st.header("Estimated Losses")
+        st.write("Malware wallets have resulted in millions of dollars in cryptocurrency theft.")
+        
+        st.header("Red Flags")
+        st.write("1. Wallet apps not downloaded from official sources")
+        st.write("2. Apps requesting unusual permissions")
+        st.write("3. Negative or suspicious reviews in app stores")
+        st.write("4. Promises of unrealistic returns or mining capabilities")
+        
+        st.header("Learn More")
+        st.markdown("- [Washington Post: He lost \$1 million to a crypto scam](https://www.washingtonpost.com/technology/2021/05/17/apple-app-store-scams-fraud/)")
+        st.markdown("- [Kaspersky: Cryptocurrency Malware](https://www.kaspersky.com/resource-center/definitions/what-is-cryptocurrency-malware)")
+
+    elif scam == "Sandwich Attack":
+        st.header("How it works")
+        st.write("A sandwich attack is a type of front-running attack in decentralized finance (DeFi) where an attacker places one transaction immediately before and another immediately after a victim's transaction, manipulating the price and profiting from the difference.")
+        
+        st.header("Example")
+        st.write("In 2020, researchers found that sandwich attacks were prevalent on decentralized exchanges like Uniswap, with some attackers earning significant profits.")
+        
+        st.header("Estimated Losses")
+        st.write("While exact figures are hard to determine, it's estimated that millions of dollars have been lost to sandwich attacks across various DeFi platforms.")
+        
+        st.header("Red Flags")
+        st.write("1. Unexpected slippage or price impact on your trades")
+        st.write("2. Transactions taking longer than usual to confirm")
+        st.write("3. Unusual activity in the mempool before and after your transaction")
+        st.write("4. Consistently getting worse prices than expected on DEX trades")
+        
+        st.header("How to Protect Yourself")
+        st.write("1. Use DEXs with built-in protections against front-running")
+        st.write("2. Set appropriate slippage tolerance for your trades")
+        st.write("3. Consider using private transaction services or relayers")
+        st.write("4. Be cautious when trading less liquid tokens or during high network congestion")
+        
+        st.header("Learn More")
+        st.markdown("- [Consensys: Understanding Sandwich Attacks](https://consensys.net/blog/metamask/understanding-sandwich-attacks/)")
+        st.markdown("- [CoinMarketCap: What Is a Sandwich Attack?](https://coinmarketcap.com/alexandria/article/what-is-a-sandwich-attack)")
+        st.markdown("- [Research Paper: Quantifying Blockchain Extractable Value](https://arxiv.org/abs/2101.05511)")
 
     if st.button("Back to Scam Types"):
-        st.experimental_rerun()
+        st.rerun()

@@ -52,12 +52,12 @@ def learning_path_page():
         next_topic = learning_paths[course_level][progress + 1]['topic']
         if st.button(f"Move to next topic: {next_topic}"):
             st.session_state.progress = progress + 1
-            st.experimental_rerun()
+            st.rerun()
     else:
         st.write("Congratulations! You've completed this course level.")
         if st.button("Restart the course"):
             st.session_state.progress = 0
-            st.experimental_rerun()
+            st.rerun()
     
     # Display progress
     st.progress((progress + 1) / len(learning_paths[course_level]))
@@ -66,8 +66,8 @@ def learning_path_page():
 def anomaly_detection_page():
     st.title("Cryptocurrency Anomaly and Volatility Analysis 📈💰📊")
     
-    base_options = ["BTC", "ETH"]
-    quote_options = ["USDT", "USD"]
+    base_options = ["BTC", "ETH", "SOL", "LINK", "USDT", "BNB", "XRP", "DOGE", "ADA", "AVAX", "AAVE", "SHIB", "DOT", "NEAR", "DAI", "LTC", "BCH", "MATIC", "PEPE", "UNI", "ARB", "FLOKI"]
+    quote_options = ["USDT", "USD", "USDC", "ETH", "BTC"]
     exchange_options = ["BINANCE", "COINBASE", "KRAKEN", "BITSTAMP", "GEMINI"]
     
     base = st.selectbox("Select base currency", base_options)

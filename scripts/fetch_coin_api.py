@@ -1,15 +1,18 @@
 import requests
 import pandas as pd
 from datetime import datetime, timedelta, timezone
+import os
+import streamlit as st
+from dotenv import load_dotenv
 
-API_KEY = 'F8BA3BC7-53F3-436C-91CF-DBAB02A3A501'
+load_dotenv()
 
 def get_historical_prices(base, quote, exchange_id=None, period_id='5MIN', days=1):
 
     
     url = f'https://rest.coinapi.io/v1/ohlcv/{exchange_id}_SPOT_{base}_{quote}/history'
     
-    headers = {'X-CoinAPI-Key': API_KEY}
+    headers = {'X-CoinAPI-Key': os.getenv("COIN_API_KEY")}
     time_start = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat(timespec='seconds')
     
     params = {
